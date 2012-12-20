@@ -8,6 +8,8 @@ TheBigDB = function(options){
     verify_ssl_certificates: false, // Not yet implemented
     before_request_execution: null, // Not yet implemented
     after_request_execution: null, // Not yet implemented
+    ajax_success_callback: null,
+    ajax_error_callback: null,
     api_host: "api.thebigdb.com",
     api_port: 80,
     api_version: "1"
@@ -98,7 +100,7 @@ TheBigDB = function(options){
 
 
 
-  this.execute_request = function(method, path, params, callback){
+  this.execute_request = function(method, path, params, success_callback, error_callback){
     method = method.toUpperCase();
 
     if(configuration.use_ssl == true){
@@ -108,7 +110,7 @@ TheBigDB = function(options){
     }
 
     var url = scheme+"://"+configuration.api_host+":"+configuration.api_port;
-    url = url+"/v"+api_version;
+    url = url+"/api/v"+configuration.api_version;
 
     if(path[0] != "/"){
       path = "/"+path;
@@ -117,29 +119,38 @@ TheBigDB = function(options){
     url = url+path;
 
     if(method == "GET"){
-      url = url+"?"+serializeParams(params);
+      url = url+"?"+serializeQueryParams(params);
     }
 
+    console.log(method);
     var req = createXMLHTTPObject();
     if (!req) return;
 
     req.open(method, url, true);
 
-    req.setRequestHeader("User-Agent", user_agent);
     req.setRequestHeader("X-TheBigDB-Client-User-Agent", JSON.stringify(client_user_agent));
-    if(method == "POST"){
-      req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    }
+    // if(method == "POST"){
+    //   req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    // }
 
     req.onreadystatechange = function(){
-      if (req.readyState != 4) return;
-      if (req.status != 200 && req.status != 304) {
-        // alert('HTTP error ' + req.status);
+      if(req.readyState != 4) return;
+      if(req.status != 200 && req.status != 304){
+        if(error_callback != null){
+          // alert('HTTP error ' + req.status);
+          error_callback(req);
+        } else if(configuration.ajax_error_callback != null){
+          configuration.ajax_error_callback(req);
+        }
         return;
       }
       
       var parsed_answer = JSON.parse(req.responseText);
-      callback(parsed_answer);
+      if(success_callback != null){
+        success_callback(parsed_answer);
+      } else if(configuration.ajax_success_callback != null){
+        configuration.ajax_success_callback(parsed_answer);
+      }
     }
     if (req.readyState == 4) return;
     req.send(serializeQueryParams(params));
@@ -147,13 +158,13 @@ TheBigDB = function(options){
   };
 
   // Resources
-  this.Sentence = function(action, params, callback){
+  this.Sentence = function(action, params, success_callback, error_callback){
     if(action == "get" || action == "show"){
-      execute_request("GET", params, callback);
+      this.execute_request("GET", "/sentences", params, success_callback, error_callback);
     } else if(action == "auto_complete" || action == "autocomplete"){
       // TODO
     } else if(action == "search"){
-      // TODO
+      this.execute_request("GET", "/sentences/search", params, success_callback, error_callback);
     } else if(action == "create"){
       // TODO
     } else if(action == "upvote"){
@@ -167,6 +178,20 @@ TheBigDB = function(options){
     } 
     return this;
   };
+
+  this.Toolbox = function(){
+    this.Units = function(action, params, success_callback, error_callback){
+      if(action == "compare"){
+        this.execute_request("GET", "/toolbox/units/compare", params, success_callback, error_callback);
+      } else if(action == "sort"){
+        // TODO
+      } else if(action == "convert"){
+        // TODO
+      }
+    };
+    return this;
+  };
+
 
 
 };
