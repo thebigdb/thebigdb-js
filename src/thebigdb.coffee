@@ -14,7 +14,7 @@ class @TheBigDB
       apiPort: 80
       apiVersion: "1"
 
-    @configuration = mergeOptions(defaultConfiguration, options)
+    @configuration = @mergeOptions(defaultConfiguration, options)
 
     # automatically assigns 443 port if using SSL,
     # unless the user specifically wants another one
@@ -71,7 +71,7 @@ class @TheBigDB
     # preparing the destination URL
     scheme = if @configuration.useSsl then "https" else "http"
     url = "#{scheme}://#{@configuration.apiHost}:#{@configuration.apiPort}/api/v#{@configuration.apiVersion}#{path}"
-    url += "?"+serializeQueryParams(params) if method == "GET"
+    url += "?"+@serializeQueryParams(params) if method == "GET"
 
     # preparing and sending the XHR request
     xhr = if window.ActiveXObject
@@ -102,7 +102,7 @@ class @TheBigDB
 
         @last_response = response
 
-    xhr.send serializeQueryParams(params)
+    xhr.send @serializeQueryParams(params)
 
   ##############
   ## Engine Helpers
@@ -112,7 +112,7 @@ class @TheBigDB
   # => house=bricks&animals%5B%5D=cat&animals%5B%5D=dog&computers%5Bcool%5D=true&computers%5Bdrives%5D%5B%5D=hard&computers%5Bdrives%5D%5B%5D=flash
   # which will be read by the server as:
   # => house=bricks&animals[]=cat&animals[]=dog&computers[cool]=true&computers[drives][]=hard&computers[drives][]=flash
-  serializeQueryParams = (obj, prefix) ->
+  serializeQueryParams: (obj, prefix) ->
     str = for key, value of obj
       param_key = if obj.constructor == Array
           if prefix then "#{prefix}[]" else key
@@ -120,14 +120,14 @@ class @TheBigDB
           if prefix then "#{prefix}[#{key}]" else key
 
       if typeof(value) == "object"
-        serializeQueryParams(value, param_key)
+        @serializeQueryParams(value, param_key)
       else
         encodeURIComponent(param_key) + "=" + encodeURIComponent(value)
 
     str.join("&")
 
 
-  mergeOptions = (obj1, obj2) ->
+  mergeOptions: (obj1, obj2) ->
     ret = obj1
     for key, value of obj2
       ret[key] = value
