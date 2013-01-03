@@ -18,4 +18,4 @@ TODO
 
 ## License
 
-TODO
+This software is distributed under the MIT License, Copyright (c) 2013 Kolibria Webservices Ltd
