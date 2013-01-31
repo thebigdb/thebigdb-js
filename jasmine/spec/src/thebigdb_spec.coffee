@@ -41,7 +41,7 @@ describe "TheBigDB", ->
         house: "bricks",
         animals: ["cat", "dog"],
         computers: {cool: true, drives: ["hard", "flash"]}
-      })).toEqual("house=bricks&animals%5B%5D=cat&animals%5B%5D=dog&computers%5Bcool%5D=true&computers%5Bdrives%5D%5B%5D=hard&computers%5Bdrives%5D%5B%5D=flash")
+      })).toEqual("house=bricks&animals%5B0%5D=cat&animals%5B1%5D=dog&computers%5Bcool%5D=true&computers%5Bdrives%5D%5B0%5D=hard&computers%5Bdrives%5D%5B1%5D=flash")
 
   describe "engine helper mergeOptions", ->
     it "replaces the some default values while keeping the values non-overwritten", ->

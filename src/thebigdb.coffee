@@ -70,7 +70,7 @@ class @TheBigDB
   executeRequest: (method, path, params, successCallback, errorCallback) ->
     # preparing the destination URL
     scheme = if @configuration.useSsl then "https" else "http"
-    url = "#{scheme}://#{@configuration.apiHost}:#{@configuration.apiPort}/api/v#{@configuration.apiVersion}#{path}"
+    url = "#{scheme}://#{@configuration.apiHost}:#{@configuration.apiPort}/v#{@configuration.apiVersion}#{path}"
     url += "?"+@serializeQueryParams(params) if method == "GET"
 
     # preparing and sending the XHR request
@@ -114,10 +114,7 @@ class @TheBigDB
   # => house=bricks&animals[]=cat&animals[]=dog&computers[cool]=true&computers[drives][]=hard&computers[drives][]=flash
   serializeQueryParams: (obj, prefix) ->
     str = for key, value of obj
-      param_key = if obj.constructor == Array
-          if prefix then "#{prefix}[]" else key
-        else
-          if prefix then "#{prefix}[#{key}]" else key
+      param_key = if prefix then "#{prefix}[#{key}]" else key
 
       if typeof(value) == "object"
         @serializeQueryParams(value, param_key)

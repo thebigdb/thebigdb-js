@@ -61,7 +61,7 @@
             cool: true,
             drives: ["hard", "flash"]
           }
-        })).toEqual("house=bricks&animals%5B%5D=cat&animals%5B%5D=dog&computers%5Bcool%5D=true&computers%5Bdrives%5D%5B%5D=hard&computers%5Bdrives%5D%5B%5D=flash");
+        })).toEqual("house=bricks&animals%5B0%5D=cat&animals%5B1%5D=dog&computers%5Bcool%5D=true&computers%5Bdrives%5D%5B0%5D=hard&computers%5Bdrives%5D%5B1%5D=flash");
       });
     });
     return describe("engine helper mergeOptions", function() {
