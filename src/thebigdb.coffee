@@ -48,15 +48,19 @@ class @TheBigDB
         result = if @_action == "get_next_node" then nodes[0] else nodes
         @_successCallback?(result)
 
-      @executeRequest(method, path, params, {success: customSuccessCallback, error: callbacks.error})
+      @executeRequest(method, path, params, {success: customSuccessCallback, error: callbacks?.error})
     else
       method = if action in ["get", "show", "search"] then "GET" else "POST"
       path = "/sentences/#{action}"
       @executeRequest(method, path, params, callbacks)
 
+  User: (action, params, callbacks) ->
+    method = "GET"
+    path = "/users/#{action}"
+    @executeRequest(method, path, params, callbacks)
 
   Toolbox: ->
-    Units: (action, params, callbacks) =>
+    Unit: (action, params, callbacks) =>
       method = "GET"
       path = "/toolbox/units/#{action}"
       @executeRequest(method, path, params, callbacks)
@@ -95,10 +99,10 @@ class @TheBigDB
           
         if response.status == "success"
           @configuration.ajaxSuccessCallback?(response)
-          callbacks.success?(response)
+          callbacks?.success?(response)
         else
           @configuration.ajaxErrorCallback?(response)
-          callbacks.error?(response)
+          callbacks?.error?(response)
 
         @last_response = response
 
