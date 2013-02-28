@@ -9,7 +9,7 @@ Note that it is originally written in CoffeeScript, so you can also grab `src/th
 
 ## Usage
 
-First initialize the TheBigDB object:
+First, initialize the TheBigDB object:
 
     thebigdb = new TheBigDB;
 
@@ -49,6 +49,15 @@ That's it!
 
 ## Other Features
 
+You can access other parts of the API in the same way as sentences:
+    
+    thebigdb.User(action, parameters, callbacks);
+    thebigdb.Toolbox().Unit(action, parameters, callbacks);
+
+    // Examples
+    thebigdb.User("show", {login: "christophe"}, {success: function(data){ alert(data.user.karma) } });
+    thebigdb.Toolbox().Unit("compare", {values: ["100 g", "1.2 kg"]}, {success: function(data){ alert(data.result) }});
+
 You can initialize the TheBigDB object with several configuration options, example:
 
     thebigdb = new TheBigDB({
@@ -73,6 +82,7 @@ While it is not in the API, you can do the following:
     thebigdb.Sentence("get_next_node", ["iPhone", "weight"], {success: function(answer){ alert(answer) }});
     // will alert something like "112 grams"
 
+It is basically a shortcut of search and of post-processing of the result. Checkout the source for more details.
 
 ## Contributing
 
