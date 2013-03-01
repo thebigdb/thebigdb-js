@@ -87,6 +87,7 @@ class @TheBigDB
 
     xhr.open(method, url, true)
     xhr.setRequestHeader("X-TheBigDB-Client-User-Agent", JSON.stringify(@clientUserAgent))
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded") if method == "POST"
 
     xhr.onreadystatechange = =>
       if xhr.readyState is 4
@@ -106,7 +107,10 @@ class @TheBigDB
 
         @last_response = response
 
-    xhr.send @serializeQueryParams(params)
+    if method == "GET"
+      xhr.send(null)
+    else
+      xhr.send(@serializeQueryParams(params))
 
   ##############
   ## Engine Helpers
