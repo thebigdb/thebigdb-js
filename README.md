@@ -19,7 +19,7 @@ Then make your requests, here is the structure:
 
 
 **[action]** => String of the action as described in the API (e.g. "search", "show", ...)  
-**[parameters]** => Object. Request parameters as described in the API. Tip: ["abc", "def"] will automatically be converted to {"0" => "abc", "1" => "def"}  
+**[parameters]** => Object. Request parameters as described in the API. Tip: Arrays like ["abc", "def"] will automatically be converted to {"0" => "abc", "1" => "def"}
 **[callbacks]** => Object. optional callbacks with the object of the server answer. Keys: "success" and "error"
 
 
