@@ -26,20 +26,20 @@ class @TheBigDB
   ## Resources
   ##############
 
-  Sentence: (action, params, callbacks) ->
+  Sentence: (action, params, successCallback, errorCallback) ->
     # shortcuts for params:
-    # with this, you can pass directly ["iPhone 5", "weight"]
+    # with this, you can pass directly ["iPhone", "weight"]
     params = {nodes: params} if params.constructor == Array
     # this way, you can pass directly "8ba34c..."
     params = {id: params} if params.constructor == String
 
-    if action in ["get_next_node", "get_next_nodes"] # Easter eggs / shortcuts
+    if action in ["get_next_node", "get_next_nodes"]
       method = "GET"
       path = "/sentences/search"
       params["nodes_count_exactly"] = params.nodes.length + 1
 
       # a little suitcase of variables
-      [@_action, @_successCallback] = [action, callbacks.success]
+      [@_action, @_successCallback] = [action, successCallback]
 
       customSuccessCallback = (response) =>
         # we make an array of the last nodes for each sentences
@@ -48,11 +48,11 @@ class @TheBigDB
         result = if @_action == "get_next_node" then nodes[0] else nodes
         @_successCallback?(result)
 
-      @executeRequest(method, path, params, {success: customSuccessCallback, error: callbacks?.error})
+      @executeRequest(method, path, params, customSuccessCallback, errorCallback)
     else
       method = if action in ["get", "show", "search"] then "GET" else "POST"
       path = "/sentences/#{action}"
-      @executeRequest(method, path, params, callbacks)
+      @executeRequest(method, path, params, successCallback, errorCallback)
 
   User: (action, params, callbacks) ->
     method = "GET"
@@ -60,10 +60,10 @@ class @TheBigDB
     @executeRequest(method, path, params, callbacks)
 
   Toolbox: ->
-    Unit: (action, params, callbacks) =>
+    Units: (action, params, successCallback, errorCallback) =>
       method = "GET"
       path = "/toolbox/units/#{action}"
-      @executeRequest(method, path, params, callbacks)
+      @executeRequest(method, path, params, successCallback, errorCallback)
 
 
 
@@ -71,7 +71,7 @@ class @TheBigDB
   ## Engine
   ##############
 
-  executeRequest: (method, path, params, callbacks) ->
+  executeRequest: (method, path, params, successCallback, errorCallback) ->
     # preparing the destination URL
     scheme = if @configuration.useSsl then "https" else "http"
     url = "#{scheme}://#{@configuration.apiHost}:#{@configuration.apiPort}/v#{@configuration.apiVersion}#{path}"
@@ -100,10 +100,10 @@ class @TheBigDB
           
         if response.status == "success"
           @configuration.ajaxSuccessCallback?(response)
-          callbacks?.success?(response)
+          successCallback?(response)
         else
           @configuration.ajaxErrorCallback?(response)
-          callbacks?.error?(response)
+          errorCallback?(response)
 
         @last_response = response
 
@@ -116,7 +116,7 @@ class @TheBigDB
   ## Engine Helpers
   ##############
   
-  # serializeQueryParams({house: "bricks", animals: ["cat", "dog"], computers: {cool: true, drives: ["hard", "flash"]}})
+  # serializeQueryParams({{house: "bricks", animals: ["cat", "dog"], computers: {cool: true, drives: ["hard", "flash"]}})
   # => house=bricks&animals%5B%5D=cat&animals%5B%5D=dog&computers%5Bcool%5D=true&computers%5Bdrives%5D%5B%5D=hard&computers%5Bdrives%5D%5B%5D=flash
   # which will be read by the server as:
   # => house=bricks&animals[]=cat&animals[]=dog&computers[cool]=true&computers[drives][]=hard&computers[drives][]=flash
