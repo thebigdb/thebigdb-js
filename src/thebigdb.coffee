@@ -96,7 +96,7 @@ class @TheBigDB
         response = try
             JSON.parse(xhr.responseText);
           catch e
-            {status: "error", error: {code: 0, message: "The server gave an invalid JSON text: #{xhr.responseText}"}}
+            {status: "error", error: {code: "0000", description: "The server gave an invalid JSON text: #{xhr.responseText}"}}
           
         if response.status == "success"
           @configuration.ajaxSuccessCallback?(response)
