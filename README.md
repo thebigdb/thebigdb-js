@@ -15,12 +15,13 @@ First, initialize the TheBigDB object:
 
 Then make your requests, here is the structure:
 
-    thebigdb.Sentence(action, parameters, callbacks);
+    thebigdb.Sentence(action, parameters, successCallback, errorCallback);
 
 
 **[action]** => String of the action as described in the API (e.g. "search", "show", ...)  
 **[parameters]** => Object. Request parameters as described in the API. Tip: Arrays like ["abc", "def"] will automatically be converted to {"0" => "abc", "1" => "def"}
-**[callbacks]** => Object. optional callbacks with the object of the server answer. Keys: "success" and "error"
+**[successCallback]** => Object. Will be executed if the request is HTTP successful
+**[errorCallback]** => Object. Will be executed if the request is not HTTP successful
 
 
 Examples:
@@ -29,9 +30,8 @@ Examples:
       {
         nodes: [{search: ""}, "job", "President of the United States"],
         period: {from: "2000-01-01 00:00:00", to: "2002-01-01 00:00:00"}
-      },
-      {
-        success: function(data){ console.log("Great Success!", JSON.stringify(data)) }
+      }, function(data){
+        console.log("Great Success!", JSON.stringify(data))
       }
     );
 
@@ -51,12 +51,12 @@ That's it!
 
 You can access other parts of the API in the same way as sentences:
     
-    thebigdb.User(action, parameters, callbacks);
-    thebigdb.Toolbox().Unit(action, parameters, callbacks);
+    thebigdb.User(action, parameters, successCallback, errorCallback);
+    thebigdb.Toolbox().Unit(action, parameters, successCallback, errorCallback);
 
     // Examples
-    thebigdb.User("show", {login: "christophe"}, {success: function(data){ alert(data.user.karma) } });
-    thebigdb.Toolbox().Unit("compare", {values: ["100 g", "1.2 kg"]}, {success: function(data){ alert(data.result) }});
+    thebigdb.User("show", {login: "christophe"}, function(data){ alert(data.user.karma) });
+    thebigdb.Toolbox().Unit("compare", {values: ["100 g", "1.2 kg"]}, function(data){ alert(data.result) });
 
 You can initialize the TheBigDB object with several configuration options, example:
 
@@ -79,7 +79,7 @@ You can initialize the TheBigDB object with several configuration options, examp
 
 While it is not in the API, you can do the following:
 
-    thebigdb.Sentence("get_next_node", ["iPhone", "weight"], {success: function(answer){ alert(answer) }});
+    thebigdb.Sentence("get_next_node", ["iPhone", "weight"], function(answer){ alert(answer) });
     // will alert something like "112 grams"
 
 It is basically a shortcut of search and of post-processing of the result. Checkout the source for more details.
