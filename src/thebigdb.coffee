@@ -54,10 +54,10 @@ class @TheBigDB
       path = "/sentences/#{action}"
       @executeRequest(method, path, params, successCallback, errorCallback)
 
-  User: (action, params, callbacks) ->
+  User: (action, params, successCallback, errorCallback) ->
     method = "GET"
     path = "/users/#{action}"
-    @executeRequest(method, path, params, callbacks)
+    @executeRequest(method, path, params, successCallback, errorCallback)
 
   Toolbox: ->
     Unit: (action, params, successCallback, errorCallback) =>
