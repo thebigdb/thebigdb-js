@@ -19,9 +19,9 @@ Then make your requests, here is the structure:
 
 
 **[action]** => String of the action as described in the API (e.g. "search", "show", ...)  
-**[parameters]** => Object. Request parameters as described in the API. Tip: Arrays like ["abc", "def"] will automatically be converted to {"0" => "abc", "1" => "def"}
-**[successCallback]** => Object. Will be executed if the request is HTTP successful
-**[errorCallback]** => Object. Will be executed if the request is not HTTP successful
+**[parameters]** => Object. Request parameters as described in the API. Tip: Arrays like ["abc", "def"] will automatically be converted to {"0" => "abc", "1" => "def"}  
+**[successCallback]** => Object. Will be executed if the request is HTTP successful  
+**[errorCallback]** => Object. Will be executed if the request is not HTTP successful  
 
 
 Examples:
