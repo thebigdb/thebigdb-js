@@ -15,7 +15,7 @@ First, initialize the TheBigDB object:
 
 Then make your requests, here is the structure:
 
-    thebigdb.Sentence(action, parameters, successCallback, errorCallback);
+    thebigdb.Statement(action, parameters, successCallback, errorCallback);
 
 
 **[action]** => String of the action as described in the API (e.g. "search", "show", ...)  
@@ -26,7 +26,7 @@ Then make your requests, here is the structure:
 
 Examples:
 
-    thebigdb.Sentence("search",
+    thebigdb.Statement("search",
       {
         nodes: [{search: ""}, "job", "President of the United States"],
         period: {from: "2000-01-01 00:00:00", to: "2002-01-01 00:00:00"}
@@ -39,7 +39,7 @@ Will log something like:
 
     Great Success! {
       "status":"success",
-      "sentences": [
+      "statements": [
         {"nodes":["Bill Clinton","job","President of the United States"], "id":"8e6aec890c942b6f7854d2d7a9f0d002f5ddd0c0", "period":{"from":"1993-01-20 00:00:00","to":"2001-01-20 00:00:00"}},
         {"nodes":["George W. Bush","job","President of the United States"], "id":"3f27673816455054032bd46e65bbe4db8ccf9076", "period":{"from":"2001-01-20 00:00:00","to":"2009-01-20 00:00:00"}}
       ]
@@ -49,7 +49,7 @@ That's it!
 
 ## Other Features
 
-You can access other parts of the API in the same way as sentences:
+You can access other parts of the API in the same way as statements:
     
     thebigdb.User(action, parameters, successCallback, errorCallback);
     thebigdb.Toolbox().Unit(action, parameters, successCallback, errorCallback);
@@ -79,7 +79,7 @@ You can initialize the TheBigDB object with several configuration options, examp
 
 While it is not in the API, you can do the following:
 
-    thebigdb.Sentence("get_next_node", ["iPhone", "weight"], function(answer){ alert(answer) });
+    thebigdb.Statement("get_next_node", ["iPhone", "weight"], function(answer){ alert(answer) });
     // will alert something like "112 grams"
 
 It is basically a shortcut of search and of post-processing of the result. Checkout the source for more details.

@@ -26,7 +26,7 @@ class @TheBigDB
   ## Resources
   ##############
 
-  Sentence: (action, params, successCallback, errorCallback) ->
+  Statement: (action, params, successCallback, errorCallback) ->
     # shortcuts for params:
     # with this, you can pass directly ["iPhone", "weight"]
     params = {nodes: params} if params.constructor == Array
@@ -35,15 +35,15 @@ class @TheBigDB
 
     if action in ["get_next_node", "get_next_nodes"]
       method = "GET"
-      path = "/sentences/search"
+      path = "/statements/search"
       params["nodes_count_exactly"] = params.nodes.length + 1
 
       # a little suitcase of variables
       [@_action, @_successCallback] = [action, successCallback]
 
       customSuccessCallback = (response) =>
-        # we make an array of the last nodes for each sentences
-        nodes = sentence.nodes[-1..] for sentence in response.sentences
+        # we make an array of the last nodes for each statements
+        nodes = statement.nodes[-1..] for statement in response.statements
         # and if we just want the top one, return a string
         result = if @_action == "get_next_node" then nodes[0] else nodes
         @_successCallback?(result)
@@ -51,7 +51,7 @@ class @TheBigDB
       @executeRequest(method, path, params, customSuccessCallback, errorCallback)
     else
       method = if action in ["get", "show", "search"] then "GET" else "POST"
-      path = "/sentences/#{action}"
+      path = "/statements/#{action}"
       @executeRequest(method, path, params, successCallback, errorCallback)
 
   User: (action, params, successCallback, errorCallback) ->
