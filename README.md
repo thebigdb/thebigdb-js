@@ -90,7 +90,7 @@ Don't hesitate to send a pull request !
 
 ## License
 
-This software is distributed under the MIT License. (c) 2013 Christophe Maximin
+This software is distributed under the MIT License. Copyright (c) 2013, Christophe Maximin <christophe@thebigdb.com>
 
 
 [0]: http://thebigdb.com
