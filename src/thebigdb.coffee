@@ -59,13 +59,6 @@ class @TheBigDB
     path = "/users/#{action}"
     @executeRequest(method, path, params, successCallback, errorCallback)
 
-  Toolbox: ->
-    Unit: (action, params, successCallback, errorCallback) =>
-      method = "GET"
-      path = "/toolbox/units/#{action}"
-      @executeRequest(method, path, params, successCallback, errorCallback)
-
-
 
   ##############
   ## Engine

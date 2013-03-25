@@ -52,11 +52,9 @@ That's it!
 You can access other parts of the API in the same way as statements:
     
     thebigdb.User(action, parameters, successCallback, errorCallback);
-    thebigdb.Toolbox().Unit(action, parameters, successCallback, errorCallback);
 
     // Examples
     thebigdb.User("show", {login: "christophe"}, function(data){ alert(data.user.karma) });
-    thebigdb.Toolbox().Unit("compare", {values: ["100 g", "1.2 kg"]}, function(data){ alert(data.result) });
 
 You can initialize the TheBigDB object with several configuration options, example:
 
