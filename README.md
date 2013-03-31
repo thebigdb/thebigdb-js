@@ -1,6 +1,6 @@
 # TheBigDB Javascript Wrapper
 
-A simple javascript wrapper for making requests to the API of [TheBigDB.com][0].
+A simple javascript wrapper for making requests to the API of [TheBigDB.com](http://thebigdb.com). [Full API documentation](http://developers.thebigdb.com/api).
 
 ## Install
 
@@ -89,6 +89,3 @@ Don't hesitate to send a pull request !
 ## License
 
 This software is distributed under the MIT License. Copyright (c) 2013, Christophe Maximin <christophe@thebigdb.com>
-
-
-[0]: http://thebigdb.com
