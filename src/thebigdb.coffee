@@ -3,7 +3,7 @@ class @TheBigDB
     version = "1.0.0"
 
     defaultConfiguration =
-      apiKey: ""
+      apiKey: null
       useSsl: false
       verifySslCertificates: false # Not yet implemented
       beforeRequestExecution: null
@@ -36,7 +36,7 @@ class @TheBigDB
     if action in ["get_next_node", "get_next_nodes"]
       method = "GET"
       path = "/statements/search"
-      params["nodes_count_exactly"] = params.nodes.length + 1
+      params.nodes_count_exactly = params.nodes.length + 1
 
       # a little suitcase of variables
       [@_action, @_successCallback] = [action, successCallback]
@@ -65,6 +65,7 @@ class @TheBigDB
   ##############
 
   executeRequest: (method, path, params, successCallback, errorCallback) ->
+    params.api_key = @configuration.apiKey
     # preparing the destination URL
     scheme = if @configuration.useSsl then "https" else "http"
     url = "#{scheme}://#{@configuration.apiHost}:#{@configuration.apiPort}/v#{@configuration.apiVersion}#{path}"

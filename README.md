@@ -59,7 +59,7 @@ You can access other parts of the API in the same way as statements:
 You can initialize the TheBigDB object with several configuration options, example:
 
     thebigdb = new TheBigDB({
-      apiKey: "",                    // your private api key *
+      apiKey: null,                  // your private api key *
       useSsl: false,                 // use https instead of http when querying the API
       beforeRequestExecution: null,  // function that will be executed before all requests
       afterRequestExecution: null,   // function that will be executed after all requests
