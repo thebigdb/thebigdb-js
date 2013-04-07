@@ -28,7 +28,7 @@ Examples:
 
     thebigdb.Statement("search",
       {
-        nodes: [{search: ""}, "job", "President of the United States"],
+        nodes: [{match: ""}, "job", "President of the United States"],
         period: {from: "2000-01-01 00:00:00", to: "2002-01-01 00:00:00"}
       }, function(data){
         console.log("Great Success!", JSON.stringify(data))
