@@ -40,8 +40,8 @@ Will log something like:
     Great Success! {
       "status":"success",
       "statements": [
-        {"nodes":["Bill Clinton","job","President of the United States"], "id":"8e6aec890c942b6f7854d2d7a9f0d002f5ddd0c0", "period":{"from":"1993-01-20 00:00:00","to":"2001-01-20 00:00:00"}},
-        {"nodes":["George W. Bush","job","President of the United States"], "id":"3f27673816455054032bd46e65bbe4db8ccf9076", "period":{"from":"2001-01-20 00:00:00","to":"2009-01-20 00:00:00"}}
+        {"nodes":["Bill Clinton","job","President of the United States"], "id":"8e6aec890c942b6f7854d2d7a9f0d002f5ddd0c0", "period":{"from":"1993-01-20 12:00:00","to":"2001-01-20 12:00:00"}},
+        {"nodes":["George W. Bush","job","President of the United States"], "id":"3f27673816455054032bd46e65bbe4db8ccf9076", "period":{"from":"2001-01-20 12:00:00","to":"2009-01-20 12:00:00"}}
       ]
     }
 
