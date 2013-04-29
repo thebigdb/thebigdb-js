@@ -20,8 +20,8 @@ Then make your requests, here is the structure:
 
 **[action]** => String of the action as described in the API (e.g. "search", "show", ...)  
 **[parameters]** => Object. Request parameters as described in the API. Tip: Arrays like ["abc", "def"] will automatically be converted to {"0" => "abc", "1" => "def"}  
-**[successCallback]** => Object. Will be executed if the request is HTTP successful  
-**[errorCallback]** => Object. Will be executed if the request is not HTTP successful  
+**[successCallback]** => (Optional) Function. Will be executed if the request is successful (with the json value status="success")
+**[errorCallback]** => (Optional) Function. Will be executed if the request is not successful
 
 
 Examples:
@@ -60,7 +60,7 @@ You can initialize the TheBigDB object with several configuration options, examp
 
     thebigdb = new TheBigDB({
       apiKey: null,                  // your private api key *
-      useSsl: false,                 // use https instead of http when querying the API
+      useSSL: false,                 // use https instead of http when querying the API
       beforeRequestExecution: null,  // function that will be executed before all requests
       afterRequestExecution: null,   // function that will be executed after all requests
       ajaxSuccessCallback: null,     // will be executed after a successful request *
@@ -84,7 +84,8 @@ It is basically a shortcut of search and of post-processing of the result. Check
 
 ## Contributing
 
-Don't hesitate to send a pull request !
+- Don't hesitate to send a pull request !
+- CoffeeScript watcher: ```coffee --compile --watch --output lib/ src/```
 
 ## License
 

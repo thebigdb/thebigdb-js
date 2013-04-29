@@ -4,8 +4,8 @@ class @TheBigDB
 
     defaultConfiguration =
       apiKey: null
-      useSsl: false
-      verifySslCertificates: false # Not yet implemented
+      useSSL: false
+      verifySSLCertificates: false # Not yet implemented
       beforeRequestExecution: null
       afterRequestExecution: null
       ajaxSuccessCallback: null
@@ -18,7 +18,7 @@ class @TheBigDB
 
     # automatically assigns 443 port if using SSL,
     # unless the user specifically wants another one
-    @configuration.apiPort = 443 if @configuration.useSsl and !options.apiPort
+    @configuration.apiPort = 443 if @configuration.useSSL and !options.apiPort
     @clientUserAgent = {publisher: "thebigdb", version: version, language: "javascript"}
 
 
@@ -67,7 +67,7 @@ class @TheBigDB
   executeRequest: (method, path, params, successCallback, errorCallback) ->
     params.api_key = @configuration.apiKey
     # preparing the destination URL
-    scheme = if @configuration.useSsl then "https" else "http"
+    scheme = if @configuration.useSSL then "https" else "http"
     url = "#{scheme}://#{@configuration.apiHost}:#{@configuration.apiPort}/v#{@configuration.apiVersion}#{path}"
     url += "?"+@serializeQueryParams(params) if method == "GET"
 
