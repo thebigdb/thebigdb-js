@@ -15,7 +15,7 @@ describe "TheBigDB", ->
 
     describe "using SSL", ->
       beforeEach ->
-        @thebigdb = new TheBigDB({useSsl: true})
+        @thebigdb = new TheBigDB({useSSL: true})
 
       it "automatically updates the port to 443", ->
         expect(@thebigdb.configuration.apiPort).toEqual(443)
@@ -23,7 +23,7 @@ describe "TheBigDB", ->
 
     describe "using SSL with a specified port", ->
       beforeEach ->
-        @thebigdb = new TheBigDB({useSsl: true, apiPort: 1337})
+        @thebigdb = new TheBigDB({useSSL: true, apiPort: 1337})
 
       it "use the user set port", ->
         expect(@thebigdb.configuration.apiPort).toEqual(1337)

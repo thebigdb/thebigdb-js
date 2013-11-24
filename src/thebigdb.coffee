@@ -1,6 +1,6 @@
 class @TheBigDB
   constructor: (options = {}) ->
-    version = "1.0.0"
+    version = "1.1.0"
 
     defaultConfiguration =
       apiKey: null
@@ -33,26 +33,9 @@ class @TheBigDB
     # this way, you can pass directly "8ba34c..."
     params = {id: params} if params.constructor == String
 
-    if action in ["get_next_node", "get_next_nodes"]
-      method = "GET"
-      path = "/statements/search"
-      params.nodes_count_exactly = params.nodes.length + 1
-
-      # a little suitcase of variables
-      [@_action, @_successCallback] = [action, successCallback]
-
-      customSuccessCallback = (response) =>
-        # we make an array of the last nodes for each statements
-        nodes = statement.nodes[-1..] for statement in response.statements
-        # and if we just want the top one, return a string
-        result = if @_action == "get_next_node" then nodes[0] else nodes
-        @_successCallback?(result)
-
-      @executeRequest(method, path, params, customSuccessCallback, errorCallback)
-    else
-      method = if action in ["get", "show", "search"] then "GET" else "POST"
-      path = "/statements/#{action}"
-      @executeRequest(method, path, params, successCallback, errorCallback)
+    method = if action in ["get", "show", "search"] then "GET" else "POST"
+    path = "/statements/#{action}"
+    @executeRequest(method, path, params, successCallback, errorCallback)
 
   User: (action, params, successCallback, errorCallback) ->
     method = "GET"

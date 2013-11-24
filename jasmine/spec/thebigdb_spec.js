@@ -22,7 +22,7 @@
       describe("using SSL", function() {
         beforeEach(function() {
           return this.thebigdb = new TheBigDB({
-            useSsl: true
+            useSSL: true
           });
         });
         return it("automatically updates the port to 443", function() {
@@ -32,7 +32,7 @@
       return describe("using SSL with a specified port", function() {
         beforeEach(function() {
           return this.thebigdb = new TheBigDB({
-            useSsl: true,
+            useSSL: true,
             apiPort: 1337
           });
         });
